@@ -1,0 +1,253 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #100b2b;
+    color: #e1f7ff;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    padding: 1.5rem 3rem;
+    background-color: #100b2b;
+    position: relative;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    color: #23d8fc;
+}
+
+.logo img {
+    width: 40px;
+    margin-right: 10px;
+}
+
+.logo h1 {
+    margin: 0;
+    font-size: 1.2rem;
+    line-height: 1.3;
+    color: #23d8fc;
+}
+
+.logo span {
+    color: orange;
+    font-size: 0.8rem;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.nav-links a {
+    color: #23d8fc;
+    text-decoration: none;
+    margin-left: 1.5rem;
+    font-weight: bold;
+    position: relative;
+}
+
+.nav-links a:hover::after,
+.nav-links a:focus::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    height: 2px;
+    width: 100%;
+    background: #23d8fc;
+}
+
+/* Dropdown Styles */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    color: #23d8fc;
+    text-decoration: none;
+    font-weight: bold;
+    margin-left: 1.5rem;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #1a1347;
+    width: 500px;
+    max-width: 90vw;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    padding: 1rem;
+    z-index: 10;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.dropdown:hover .dropdown-content,
+.dropdown:focus-within .dropdown-content {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.dropdown-main {
+    display: flex;
+    justify-content: flex-start; /* Align items to the left with a small gap */
+    gap: 2rem; /* Reduced gap between Medical Jobs and Non-Medical */
+    align-items: flex-start; /* Ensure sections are aligned at the top */
+}
+
+.dropdown-section.medical-jobs {
+    flex: 0 1 auto; /* Allow it to take only the space it needs */
+}
+
+.dropdown-section.non-medical {
+    flex: 0 1 auto; /* Allow it to take only the space it needs */
+}
+
+.dropdown-heading {
+    display: block;
+    color: #87e8fd;
+    font-weight: bold;
+    font-size: 1.1rem;
+    padding: 0.5rem 0;
+    text-decoration: none;
+    border-bottom: 1px solid #2a1f6b;
+    margin-bottom: 0.5rem;
+}
+
+.dropdown-heading:hover {
+    color: #23d8fc;
+}
+
+.non-medical-heading {
+    border-bottom: none; /* Remove border for Non-Medical since it has no subcategories */
+    margin-bottom: 0; /* Remove margin to align with Medical Jobs */
+}
+
+.dropdown-subcontent {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.dropdown-column {
+    flex: 1;
+}
+
+.dropdown-column > a {
+    color: #23d8fc;
+    text-decoration: none;
+    padding: 0.5rem 0;
+    display: block;
+}
+
+.dropdown-subcontent.nested {
+    display: none;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-left: 1rem;
+}
+
+.dropdown-column:hover .dropdown-subcontent.nested {
+    display: flex;
+}
+
+.dropdown-subcontent.nested a {
+    color: #e1f7ff;
+    text-decoration: none;
+    font-size: 0.9rem;
+    padding: 0.3rem 0;
+}
+
+.dropdown-subcontent.nested a:hover {
+    color: #23d8fc;
+    background-color: #2a1f6b;
+    border-radius: 4px;
+    padding-left: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.hero {
+    text-align: center;
+    padding: 6rem 2rem;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    color: #23d8fc;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.hero p {
+    font-size: 1.5rem;
+    color: #87e8fd;
+}
+
+main {
+    min-height: calc(100vh - 200px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav-links {
+        position: static;
+        transform: none;
+        width: 100%;
+        margin-top: 1rem;
+        justify-content: center;
+    }
+
+    .nav-links a,
+    .dropbtn {
+        margin-left: 0;
+        margin-right: 1.5rem;
+    }
+
+    .dropdown-content {
+        position: static;
+        width: 100%;
+        max-width: 100%;
+        box-shadow: none;
+        padding: 0.5rem;
+    }
+
+    .dropdown-main {
+        flex-direction: column;
+        gap: 1rem; /* Smaller gap on mobile */
+    }
+
+    .dropdown-section.medical-jobs,
+    .dropdown-section.non-medical {
+        flex: none;
+    }
+
+    .dropdown-subcontent {
+        flex-direction: column;
+    }
+
+    .dropdown-column {
+        flex: none;
+    }
+
+    .dropdown-subcontent.nested {
+        padding-left: 1.5rem;
+    }
+}
