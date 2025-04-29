@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title') - BA Global</title>
+    <title>{{ $categoryName }} - BA Global</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/dashbooard.css') }}">
 </head>
 <body>
     <div class="corner-circles-wrapper"></div>
@@ -26,10 +25,10 @@
             <div class="collapse navbar-collapse" id="mainNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="{{ url('/') }}">Home</a>
+                        <a class="nav-link" href="{{ url('/') }}">Home</a>
                     </li>
                     <li class="nav-item dropdown position-static">
-                        <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Services</a>
+                        <a class="nav-link dropdown-toggle active" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Services</a>
                         <div class="dropdown-menu dropdown-mega p-4" aria-labelledby="servicesDropdown">
                             <div class="row">
                                 @php
@@ -40,7 +39,7 @@
                                         <h5>{{ $medicalCategory->name }}</h5>
                                         <ul class="list-unstyled">
                                             @foreach ($medicalCategory->products()->distinct('product_type')->pluck('product_type') as $productType)
-                                                <li><a class="dropdown-item" href="{{ url('/' . Str::slug($productType)) }}">{{ ucfirst($productType) }}</a></li>
+                                                <li><a class="dropdown-item {{ request()->is(Str::slug($productType)) ? 'active' : '' }}" href="{{ url('/' . Str::slug($productType)) }}">{{ ucfirst($productType) }}</a></li>
                                             @endforeach
                                         </ul>
                                     </div>
@@ -64,38 +63,38 @@
                             <li><a class="dropdown-item" href="#">Contact Person</a></li>
                         </ul>
                     </li>
-                    @if (session('user'))
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('admin.dashboard') }}">Dashboard</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('logout') }}">Logout</a>
-                        </li>
-                    @else
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">Register</a>
-                        </li>
-                    @endif
                 </ul>
             </div>
         </div>
     </nav>
 
-    @if (session('success'))
-        <div class="alert alert-success text-center" style="background-color: #00C4B4; color: #ffffff;">
-            {{ session('success') }}
+    <section class="card-section">
+        <h2>{{ $categoryName }}</h2>
+        <div class="container">
+            <div class="row">
+                @forelse($products as $product)
+                    <div class="col-md-4 col-sm-6">
+                        <div class="modern-card">
+                            @if ($product->image_url)
+                                <img src="{{ $product->image_url }}" alt="{{ $product->name }}" loading="lazy">
+                            @else
+                                <img src="{{ asset('image/default-product.png') }}" alt="Default Product Image" loading="lazy">
+                            @endif
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $product->name }}</h5>
+                                <p class="card-text">{{ $product->description }}</p>
+                                <a href="https://wa.me/+250785530789?text=Hello,%20I’m%20interested%20in%20the%20{{ $product->name }}." class="whatsapp-btn" target="_blank">Contact via WhatsApp</a>
+                            </div>
+                        </div>
+                    </div>
+                @empty
+                    <div class="col-12">
+                        <p>No equipment available in this category.</p>
+                    </div>
+                @endforelse
+            </div>
         </div>
-    @endif
-    @if (session('error'))
-        <div class="alert alert-danger text-center" style="background-color: #FF5733; color: #ffffff;">
-            {{ session('error') }}
-        </div>
-    @endif
-
-    @yield('content')
+    </section>
 
     <footer>
         <p>© 2025 BA Global. All Rights Reserved.</p>
@@ -107,6 +106,5 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ asset('dashboard.js')}}"></script>
 </body>
 </html>
