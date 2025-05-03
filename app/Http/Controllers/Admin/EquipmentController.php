@@ -29,6 +29,15 @@ class EquipmentController extends Controller
         $productCount = Product::count();
 
 
+
+        return view('admin.dashboard', compact( 'consumablesCount',
+            'equipmentCount',
+            'categoryCount',
+            'productCount'
+
+        ));
+
+
         return view('test', compact(
             'consumablesCount',
             'equipmentCount',

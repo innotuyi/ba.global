@@ -1,55 +1,41 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Sidebar toggle functionality
+document.addEventListener('DOMContentLoaded', function () {
     const sidebarToggle = document.querySelector('.sidebar-toggle');
     const dashboardSidebar = document.querySelector('.dashboard-sidebar');
-    
+
+    // Sidebar toggle
     if (sidebarToggle && dashboardSidebar) {
-        sidebarToggle.addEventListener('click', function() {
+        sidebarToggle.addEventListener('click', () => {
             dashboardSidebar.classList.toggle('active');
         });
     }
-    
-    // Collapsible sidebar menu items
+
+    // Handle collapsible menu icons
     const navLinks = document.querySelectorAll('.sidebar-nav .nav-link[data-bs-toggle="collapse"]');
-    
     navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
+        link.addEventListener('click', function () {
             const icon = this.querySelector('.fa-chevron-down');
             if (icon) {
-                icon.classList.toggle('rotate');
+                icon.classList.toggle('fa-rotate-180');
             }
         });
     });
-    
-    // Add active class to current nav item
+
+    // Highlight the active link
     const currentPath = window.location.pathname;
     const navItems = document.querySelectorAll('.sidebar-nav .nav-link');
-    
+
     navItems.forEach(item => {
-        if (item.getAttribute('href') === currentPath) {
+        const itemHref = item.getAttribute('href');
+        if (itemHref && currentPath === new URL(itemHref, window.location.origin).pathname) {
             item.classList.add('active');
         }
     });
-    
-    // Initialize tooltips
-    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl);
-    });
-    
-    // Initialize popovers
-    const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
-    popoverTriggerList.map(function (popoverTriggerEl) {
-        return new bootstrap.Popover(popoverTriggerEl);
-    });
-});
 
-// Add rotation class to chevron icon when collapsed
-document.querySelectorAll('.nav-link[data-bs-toggle="collapse"]').forEach(link => {
-    link.addEventListener('click', function() {
-        const icon = this.querySelector('.fa-chevron-down');
-        if (icon) {
-            icon.classList.toggle('fa-rotate-180');
-        }
-    });
+    // Bootstrap tooltips
+    const tooltipTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.forEach(el => new bootstrap.Tooltip(el));
+
+    // Bootstrap popovers
+    const popoverTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="popover"]'));
+    popoverTriggerList.forEach(el => new bootstrap.Popover(el));
 });

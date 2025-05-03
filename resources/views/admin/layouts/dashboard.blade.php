@@ -28,14 +28,14 @@
                             <span>Dashboard</span>
                         </a>
                     </li>
-                   
-                    <li class="nav-item {{ request()->is('admin/products*') ? 'active' : '' }}">
-                        <a class="nav-link" data-bs-toggle="collapse" href="#productsCollapse" role="button">
-                            <i class="fas fa-box-open"></i>
-                            <span>Products</span>
-                            <i class="fas fa-chevron-down"></i>
+                    <li class="nav-item {{ request()->is('admin/products*') || request()->is('admin/categories') ? 'active' : '' }}">
+                        <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#productsCollapse" role="button" aria-expanded="{{ request()->is('admin/products*') || request()->is('admin/categories') ? 'true' : 'false' }}" aria-controls="productsCollapse">
+                            <span>
+                                <i class="fas fa-box-open"></i> Products
+                            </span>
+                            <i class="fas fa-chevron-down {{ request()->is('admin/products*') || request()->is('admin/categories') ? 'fa-rotate-180' : '' }}"></i>
                         </a>
-                        <div class="collapse {{ request()->is('admin/products*') ? 'show' : '' }}" id="productsCollapse">
+                        <div class="collapse {{ request()->is('admin/products*') || request()->is('admin/categories') ? 'show' : '' }}" id="productsCollapse">
                             <ul class="submenu">
                                 <li><a href="{{ route('admin.products.index') }}" class="{{ request()->is('admin/products') ? 'active' : '' }}">All Products</a></li>
                                 <li><a href="{{ route('admin.products.create') }}" class="{{ request()->is('admin/products/create') ? 'active' : '' }}">Add New</a></li>
@@ -43,6 +43,7 @@
                             </ul>
                         </div>
                     </li>
+                    
                    
                     {{-- <li class="nav-item {{ request()->is('admin/services*') ? 'active' : '' }}">
                         <a class="nav-link" data-bs-toggle="collapse" href="#servicesCollapse" role="button">
@@ -151,7 +152,8 @@
     <div class="corner-circles-wrapper"></div>
     <div class="corner-circles-wrapper-2"></div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- For Bootstrap 5 -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('js/dashboard.js') }}"></script>
     @yield('scripts')
 </body>
